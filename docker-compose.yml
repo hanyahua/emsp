@@ -10,7 +10,7 @@ services:
     depends_on:
       - db
     environment:
-      DATASOURCE_URL: jdbc:mysql://db:3306/emps
+      DATASOURCE_URL: db:3306
       DATASOURCE_USERNAME: ${DATASOURCE_USERNAME}
       DATASOURCE_PASSWORD: ${DATASOURCE_PASSWORD}
       SPRING_PROFILES_ACTIVE: prod
