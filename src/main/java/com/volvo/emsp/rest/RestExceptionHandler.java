@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -50,8 +51,8 @@ public class RestExceptionHandler {
 
     @ExceptionHandler({
             BadRequestException.class,
-            IllegalArgumentException.class}
-    )
+            IllegalArgumentException.class
+    })
     public ResponseEntity<FormatedErrorResponse> handleBadRequest(
             Exception ex,
             WebRequest request
@@ -62,6 +63,26 @@ public class RestExceptionHandler {
                 new FormatedErrorResponse(
                         HttpStatus.BAD_REQUEST.value(),
                         "Validation Failed",
+                        List.of(ex.getMessage()),
+                        path,
+                        new Date()
+                )
+        );
+    }
+
+    @ExceptionHandler({
+            HttpRequestMethodNotSupportedException.class
+    })
+    public ResponseEntity<FormatedErrorResponse> handleMethodNotAllowed(
+            HttpRequestMethodNotSupportedException ex,
+            WebRequest request
+    ) {
+        log.error(ex.getMessage(), ex);
+        String path = getRequestURI(request);
+        return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED.value()).body(
+                new FormatedErrorResponse(
+                        HttpStatus.METHOD_NOT_ALLOWED.value(),
+                        "Method Not Allowed",
                         List.of(ex.getMessage()),
                         path,
                         new Date()
