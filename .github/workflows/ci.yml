@@ -55,18 +55,21 @@ jobs:
           echo "DATASOURCE_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
           echo "DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
+      - name: Confirm files exist before SCP
+        run: ls -lh emps.jar Dockerfile docker-compose.yml .env
+
       - name: Upload jar and Dockerfile to EC2
         uses: appleboy/scp-action@v0.1.7
         with:
-            host: ${{ secrets.EC2_HOST }}
-            username: ${{ secrets.EC2_USER }}
-            key: ${{ secrets.EC2_SSH_KEY }}
-            source: |
-              emps.jar
-              Dockerfile
-              docker-compose.yml
-              .env
-            target: /home/${{ secrets.EC2_USER }}/emps
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: |
+            emps.jar
+            Dockerfile
+            docker-compose.yml
+            .env
+          target: ~/emps
 
       - name: Build and run Docker container on EC2
         uses: appleboy/ssh-action@v1.0.0
