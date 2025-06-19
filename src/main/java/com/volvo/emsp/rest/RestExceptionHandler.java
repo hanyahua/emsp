@@ -5,6 +5,7 @@ import com.volvo.emsp.execption.InvalidBusinessOperationException;
 import com.volvo.emsp.execption.ResourceAlreadyExistsException;
 import com.volvo.emsp.execption.ResourceNotFoundException;
 import com.volvo.emsp.rest.model.FormatedErrorResponse;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -14,7 +15,6 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -32,7 +32,7 @@ public class RestExceptionHandler {
             MethodArgumentNotValidException ex,
             WebRequest request
     ) {
-        log.error(ex.getMessage(), ex);
+        log.warn(ex.getMessage());
         String path = getRequestURI(request);
         List<String> errors = ex.getBindingResult()
                 .getFieldErrors()
@@ -58,7 +58,11 @@ public class RestExceptionHandler {
             Exception ex,
             WebRequest request
     ) {
-        log.error(ex.getMessage(), ex);
+        if (ex instanceof BadRequestException) {
+            log.warn(ex.getMessage());
+        } else {
+            log.error(ex.getMessage(), ex);
+        }
         String path = getRequestURI(request);
         return ResponseEntity.badRequest().body(
                 new FormatedErrorResponse(
@@ -78,7 +82,7 @@ public class RestExceptionHandler {
             HttpRequestMethodNotSupportedException ex,
             WebRequest request
     ) {
-        log.error(ex.getMessage(), ex);
+        log.warn(ex.getMessage());
         String path = getRequestURI(request);
         return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED.value()).body(
                 new FormatedErrorResponse(
@@ -98,7 +102,7 @@ public class RestExceptionHandler {
             HttpMediaTypeNotSupportedException ex,
             WebRequest request
     ) {
-        log.error(ex.getMessage(), ex);
+        log.warn(ex.getMessage());
         String path = getRequestURI(request);
         return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()).body(
                 new FormatedErrorResponse(
@@ -139,13 +143,14 @@ public class RestExceptionHandler {
 
     @ExceptionHandler({
             ResourceNotFoundException.class,
-            NoResourceFoundException.class
+            NoResourceFoundException.class,
+            EntityNotFoundException.class
     })
     public ResponseEntity<FormatedErrorResponse> handleNotFound(
             Exception ex,
             WebRequest request
     ) {
-        log.error(ex.getMessage(), ex);
+        log.warn(ex.getMessage());
         String path = getRequestURI(request);
         return ResponseEntity.status(HttpStatus.NOT_FOUND.value()).body(
                 new FormatedErrorResponse(
@@ -163,7 +168,7 @@ public class RestExceptionHandler {
             ResourceAlreadyExistsException ex,
             WebRequest request
     ) {
-        log.error(ex.getMessage(), ex);
+        log.warn(ex.getMessage());
         String path = getRequestURI(request);
         return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(
                 new FormatedErrorResponse(
@@ -193,7 +198,6 @@ public class RestExceptionHandler {
                 )
         );
     }
-
 
     private static String getRequestURI(WebRequest request) {
         try {
