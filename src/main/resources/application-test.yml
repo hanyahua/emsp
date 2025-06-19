@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:emsp;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+    show-sql: true
+  sql:
+    init:
+      mode: always
+      #schema-locations: classpath:schema-test.sql
+      #data-locations: classpath:data-h2.sql
+logging:
+  level:
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
