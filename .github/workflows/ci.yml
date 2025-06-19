@@ -64,7 +64,11 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "emps.jar,Dockerfile,docker-compose.yml,.env"
+          source: |
+            ./emps.jar
+            ./Dockerfile
+            ./docker-compose.yml
+            ./.env
           target: "~/emps"
 
       - name: Upload .env file to EC2
