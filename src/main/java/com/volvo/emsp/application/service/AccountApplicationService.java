@@ -48,7 +48,7 @@ public class AccountApplicationService {
     @Transactional
     public AccountDTO createAccount(String email) {
         if (!Email.isValid(email)) {
-            throw new BadRequestException("Invalid email format." + email);
+            throw new BadRequestException("Invalid email format: " + email);
         }
         // check if email exists
         if (accountRepository.existsByEmail(Email.of(email))) {
