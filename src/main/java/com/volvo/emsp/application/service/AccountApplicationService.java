@@ -9,8 +9,10 @@ import com.volvo.emsp.domain.service.EmaidGenerator;
 import com.volvo.emsp.execption.BadRequestException;
 import com.volvo.emsp.execption.InvalidBusinessOperationException;
 import com.volvo.emsp.execption.ResourceAlreadyExistsException;
+import com.volvo.emsp.execption.ResourceNotFoundException;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import java.util.Optional;
 @Service
 public class AccountApplicationService {
 
+    private static final Logger log = LoggerFactory.getLogger(AccountApplicationService.class);
     private final AccountRepository accountRepository;
     private final EmaidGenerator emaidGenerator;
 
@@ -65,15 +68,18 @@ public class AccountApplicationService {
 
     @Transactional
     public void changeAccountStatus(Long accountId, String targetStatusStr) {
-        Account account = accountRepository.findById(accountId)
-                .orElseThrow(() -> new EntityNotFoundException("Account not found"));
-
+        log.info("change account {} status to {}", accountId, targetStatusStr);
+        if (targetStatusStr == null || targetStatusStr.isEmpty()) {
+            throw new BadRequestException("Invalid account status: " + targetStatusStr);
+        }
         AccountStatus targetStatus;
         try {
             targetStatus = AccountStatus.valueOf(targetStatusStr.toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new BadRequestException("Invalid account status: " + targetStatusStr);
         }
+        Account account = accountRepository.findById(accountId)
+                .orElseThrow(() -> new ResourceNotFoundException("Account not found: " + accountId));
 
         switch (targetStatus) {
             case ACTIVATED -> account.activate();
