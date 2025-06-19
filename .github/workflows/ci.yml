@@ -46,6 +46,8 @@ jobs:
           fi
           echo "✅ Found: $JAR_FILE"
           cp "$JAR_FILE" emps.jar
+          echo "📦 Listing emps.jar:"
+          ls -lh emps.jar
 
       - name: Generate .env file
         run: |
