@@ -38,8 +38,13 @@ jobs:
 
       - name: Prepare files for upload
         run: |
+          echo "Looking for packaged JAR..."
           JAR_FILE=$(ls target/*.jar | grep -v '.jar.original')
-          echo "Using jar file: $JAR_FILE"
+          if [ -z "$JAR_FILE" ]; then
+          echo "❌ No executable JAR found!"
+          exit 1
+          fi
+          echo "✅ Found: $JAR_FILE"
           cp "$JAR_FILE" emps.jar
 
       - name: Generate .env file
