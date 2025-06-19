@@ -45,9 +45,9 @@ jobs:
           exit 1
           fi
           echo "✅ Found: $JAR_FILE"
-          cp "$JAR_FILE" emps.jar
-          echo "📦 Listing emps.jar:"
-          ls -lh emps.jar
+          cp "$JAR_FILE" emsp.jar
+          echo "📦 Listing emsp.jar:"
+          ls -lh emsp.jar
 
       - name: Generate .env file
         run: |
@@ -56,7 +56,7 @@ jobs:
           echo "DATASOURCE_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
 
       - name: Confirm files exist before SCP
-        run: ls -lh emps.jar Dockerfile docker-compose.yml .env
+        run: ls -lh emsp.jar Dockerfile docker-compose.yml .env
 
       - name: Upload jar and Dockerfile to EC2
         uses: appleboy/scp-action@v0.1.7
@@ -64,8 +64,8 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "./emps.jar,./Dockerfile,./docker-compose.yml,./.env"
-          target: "~/emps"
+          source: "./emsp.jar,./Dockerfile,./docker-compose.yml,./.env"
+          target: "~/emsp"
 
       - name: Build and run Docker container on EC2
         uses: appleboy/ssh-action@v1.0.0
@@ -74,6 +74,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd ~/emps
+            cd ~/emsp
             docker-compose down
             docker-compose up --build -d

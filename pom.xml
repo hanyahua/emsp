@@ -11,8 +11,8 @@
     <groupId>com.volvo</groupId>
     <artifactId>emsp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>emps</name>
-    <description>eMps Account and Card Service</description>
+    <name>emsp</name>
+    <description>emsp Account and Card Service</description>
     <url/>
     <licenses>
         <license/>

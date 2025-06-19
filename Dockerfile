@@ -1,4 +1,4 @@
 FROM eclipse-temurin:21-jdk
-COPY emps.jar /emps.jar
-ENTRYPOINT ["java", "-jar", "/emps.jar"]
+COPY emsp.jar /emsp.jar
+ENTRYPOINT ["java", "-jar", "/emsp.jar"]
 CMD ["--spring.profiles.active=${SPRING_PROFILES_ACTIVE}"]

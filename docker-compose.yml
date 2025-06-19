@@ -3,8 +3,8 @@ version: '3.8'
 services:
   app:
     build: .
-    image: emps:latest
-    container_name: emps
+    image: emsp:latest
+    container_name: emsp
     ports:
       - "80:8080"
     depends_on:
@@ -20,7 +20,7 @@ services:
     container_name: mysql
     restart: always
     environment:
-      MYSQL_DATABASE: emps
+      MYSQL_DATABASE: emsp
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "3306:3306"
