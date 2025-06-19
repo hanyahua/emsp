@@ -31,6 +31,7 @@ public class Emails {
     public static final String INVALID_EMAIL14 = "user@domain space.com"; // space in domain
     public static final String INVALID_EMAIL15 =
             "verylonglocalparthavingmorethan64characters0123456789abcdefghijklmnopqrstuvwxyz@domain.com";  // local part > 64 chars
+    public static final String INVALID_EMAIL16 = "leoabby@outlook.ocm";
 
     public static void main(String[] args) {
         System.out.println(TOO_LONG_EMAIL);

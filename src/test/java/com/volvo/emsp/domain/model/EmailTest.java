@@ -33,6 +33,7 @@ class EmailTest {
             Emails.INVALID_EMAIL13,
             Emails.INVALID_EMAIL14,
             Emails.INVALID_EMAIL15,
+            Emails.INVALID_EMAIL16,
             Emails.TOO_LONG_EMAIL
     })
     void testInvalidEmailFormat(String invalidEmail) {
