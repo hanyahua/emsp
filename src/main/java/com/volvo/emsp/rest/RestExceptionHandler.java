@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -83,6 +84,26 @@ public class RestExceptionHandler {
                 new FormatedErrorResponse(
                         HttpStatus.METHOD_NOT_ALLOWED.value(),
                         "Method Not Allowed",
+                        List.of(ex.getMessage()),
+                        path,
+                        new Date()
+                )
+        );
+    }
+
+    @ExceptionHandler({
+            HttpMediaTypeNotSupportedException.class
+    })
+    public ResponseEntity<FormatedErrorResponse> handleMediaTypeNotSupported(
+            HttpMediaTypeNotSupportedException ex,
+            WebRequest request
+    ) {
+        log.error(ex.getMessage(), ex);
+        String path = getRequestURI(request);
+        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE.value()).body(
+                new FormatedErrorResponse(
+                        HttpStatus.UNSUPPORTED_MEDIA_TYPE.value(),
+                        "Unsupported Media Type",
                         List.of(ex.getMessage()),
                         path,
                         new Date()
