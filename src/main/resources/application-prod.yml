@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: eMSP
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+  datasource:
+    url: jdbc:mysql://${DATASOURCE_URL}/emsp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+    username: ${DATASOURCE_USERNAME}
+    password: ${DATASOURCE_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+app:
+  id: 0
