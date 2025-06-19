@@ -71,15 +71,6 @@ jobs:
             ./.env
           target: "~/emps"
 
-      - name: Upload .env file to EC2
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USER }}
-            
-            .env
-          target: ~/emps
-
       - name: Build and run Docker container on EC2
         uses: appleboy/ssh-action@v1.0.0
         with:
@@ -87,6 +78,6 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
-            cd /home/${{ secrets.EC2_USER }}/emps
+            cd ~/emps
             docker-compose down
             docker-compose up --build -d
