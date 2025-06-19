@@ -3,6 +3,7 @@ package com.volvo.emsp.rest;
 import com.volvo.emsp.execption.BadRequestException;
 import com.volvo.emsp.execption.InvalidBusinessOperationException;
 import com.volvo.emsp.execption.ResourceAlreadyExistsException;
+import com.volvo.emsp.execption.ResourceNotFoundException;
 import com.volvo.emsp.rest.model.FormatedErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Date;
 import java.util.List;
@@ -93,9 +95,12 @@ public class RestExceptionHandler {
         );
     }
 
-    @ExceptionHandler(ResourceAccessException.class)
+    @ExceptionHandler({
+            ResourceNotFoundException.class,
+            NoResourceFoundException.class
+    })
     public ResponseEntity<FormatedErrorResponse> handleNotFound(
-            UnsupportedOperationException ex,
+            Exception ex,
             WebRequest request
     ) {
         log.error(ex.getMessage(), ex);
