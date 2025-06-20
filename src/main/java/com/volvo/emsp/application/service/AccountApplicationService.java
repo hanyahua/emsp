@@ -50,6 +50,7 @@ public class AccountApplicationService {
 
     @Transactional
     public AccountDTO createAccount(String email) {
+        log.info("create an account with emil : {}", email);
         if (!Email.isValid(email)) {
             throw new BadRequestException("Invalid email format: " + email);
         }
