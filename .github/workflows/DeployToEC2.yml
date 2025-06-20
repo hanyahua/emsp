@@ -64,7 +64,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "./emsp.jar,./Dockerfile,./docker-compose.yml,./.env,init-ubuntu.sh"
+          source: "./emsp.jar,./Dockerfile,./docker-compose.yml,./.env,init-ec2.sh"
           target: "~/emsp"
 
       - name: Install Docker and Docker Compose on EC2
@@ -75,8 +75,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/emsp
-            chmod +x init-ubuntu.sh
-            ./init-ubuntu.sh
+            chmod +x init-ec2.sh
+            ./init-ec2.sh
 
       - name: Build and run Docker container on EC2
         uses: appleboy/ssh-action@v1.0.0
