@@ -1,4 +1,9 @@
 terraform {
+  backend "s3" {
+    bucket = "terraform-state-emsp"
+    key    = "env/dev/terraform.tfstate"
+    region = "ap-northeast-1"
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"

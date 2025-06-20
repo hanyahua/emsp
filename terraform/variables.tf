@@ -13,6 +13,7 @@ variable "key_name" {
 
 variable "docker_image" {
   type = string
+  default = "hanyahua/emsp:latest"
 }
 
 variable "db_username" {
