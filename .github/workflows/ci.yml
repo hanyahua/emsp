@@ -75,8 +75,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             cd ~/emsp
-            chmod +x install-docker.sh
-            ./install-docker.sh
+            chmod +x init-ubuntu.sh
+            ./init-ubuntu.sh
 
       - name: Build and run Docker container on EC2
         uses: appleboy/ssh-action@v1.0.0
