@@ -7,9 +7,9 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
   datasource:
-    url: jdbc:mysql://${DATASOURCE_URL}/emsp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
+    url: jdbc:mysql://${DB_HOST}:3306/${DB_NAME}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 app:
   id: 0
