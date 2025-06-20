@@ -13,8 +13,8 @@ public class CardDTO {
     private String visibleNumber;
     private String contractId;  // 合同ID，可能为空
     private CardStatus status;
-    private LocalDateTime lastUpdatedTime;
-    private LocalDateTime createdTime;
+    private LocalDateTime lastUpdated;
+    private LocalDateTime createdAt;
     private Long accountId;     // 关联账户ID，可能为空
 
     public CardDTO() {}
@@ -61,20 +61,20 @@ public class CardDTO {
         this.status = status;
     }
 
-    public LocalDateTime getLastUpdatedTime() {
-        return lastUpdatedTime;
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
     }
 
-    public void setLastUpdatedTime(LocalDateTime lastUpdatedTime) {
-        this.lastUpdatedTime = lastUpdatedTime;
+    public void setLastUpdated(LocalDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 
-    public LocalDateTime getCreatedTime() {
-        return createdTime;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setCreatedTime(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     public Long getAccountId() {
@@ -95,9 +95,9 @@ public class CardDTO {
         dto.setVisibleNumber(card.getVisibleNumber());
         dto.setContractId(card.getContractId() == null ? null : card.getContractId().toString());
         dto.setStatus(card.getStatus());
-        dto.setLastUpdatedTime(card.getLastUpdated());
+        dto.setLastUpdated(card.getLastUpdated());
         dto.setAccountId(card.getAccountId());
-        dto.setCreatedTime(card.getCreatedAt());
+        dto.setCreatedAt(card.getCreatedAt());
         return dto;
     }
 
@@ -109,8 +109,8 @@ public class CardDTO {
                 ", visibleNumber='" + visibleNumber + '\'' +
                 ", contractId='" + contractId + '\'' +
                 ", status=" + status +
-                ", lastUpdatedTime=" + lastUpdatedTime +
-                ", createdTime=" + createdTime +
+                ", lastUpdatedTime=" + lastUpdated +
+                ", createdTime=" + createdAt +
                 ", accountId=" + accountId +
                 '}';
     }
