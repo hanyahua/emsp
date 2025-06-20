@@ -98,7 +98,7 @@ resource "aws_security_group" "rds_sg" {
 
 resource "aws_db_subnet_group" "main" {
   name = "main"
-  subnet_ids = [aws_subnet.public.id]
+  subnet_ids = [aws_subnet.public.id, aws_subnet.publicB.id]
 }
 
 resource "aws_db_instance" "mysql" {
