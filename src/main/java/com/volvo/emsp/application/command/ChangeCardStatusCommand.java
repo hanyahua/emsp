@@ -1,8 +1,12 @@
 package com.volvo.emsp.application.command;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class ChangeCardStatusCommand {
 
+    @NotBlank(message = "targetStatus is required")
     private String targetStatus;
+
     private Long assignToAccount;
 
     public String getTargetStatus() {
