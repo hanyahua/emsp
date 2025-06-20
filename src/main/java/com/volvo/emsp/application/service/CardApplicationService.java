@@ -52,14 +52,7 @@ public class CardApplicationService {
     @Transactional
     public void activeCard(Long cardId) {
         log.info("Activating card {}", cardId);
-        if (cardId == null) {
-            throw new BadRequestException("Card ID must not be null");
-        }
-        Optional<Card> optionalCard = cardRepository.findById(cardId);
-        if (optionalCard.isEmpty()) {
-            throw new ResourceNotFoundException("Card not found: " + cardId);
-        }
-        Card card = optionalCard.get();
+        Card card = checkCardExistsAndReturn(cardId);
         card.activate();
         cardRepository.save(card);
     }
@@ -67,14 +60,7 @@ public class CardApplicationService {
     @Transactional
     public void deactivateCard(Long cardId) {
         log.info("Deactivating card {}", cardId);
-        if (cardId == null) {
-            throw new BadRequestException("Card ID must not be null");
-        }
-        Optional<Card> optionalCard = cardRepository.findById(cardId);
-        if (optionalCard.isEmpty()) {
-            throw new ResourceNotFoundException("Card not found: " + cardId);
-        }
-        Card  card = optionalCard.get();
+        Card card = checkCardExistsAndReturn(cardId);
         card.deactivate();
         cardRepository.save(card);
     }
@@ -113,5 +99,16 @@ public class CardApplicationService {
     public Optional<CardDTO> findCardById(Long id) {
         Optional<Card> optionalCard = cardRepository.findById(id);
         return optionalCard.map(CardDTO::of);
+    }
+
+    private Card checkCardExistsAndReturn(Long cardId) {
+        if (cardId == null) {
+            throw new BadRequestException("Card ID must not be null");
+        }
+        Optional<Card> optionalCard = cardRepository.findById(cardId);
+        if (optionalCard.isEmpty()) {
+            throw new ResourceNotFoundException("Card not found: " + cardId);
+        }
+        return optionalCard.get();
     }
 }
