@@ -11,7 +11,12 @@ provider "aws" {
 }
 
 resource "aws_vpc" "main" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = "10.0.0.0/16",
+  enable_dns_hostnames = true, # fix creating RDS DB Instance (mysql): operation error RDS: CreateDBInstance, https response error StatusCode: 400, RequestID: ec0ff350-7262-4a32-86ac-d548f1efddf5, InvalidVPCNetworkStateFault: Cannot create a publicly accessible DBInstance.  The specified VPC does not support DNS resolution, DNS hostnames, or both. Update the VPC and then try again
+  enable_dns_support = true,
+  tags = {
+    Name = "main-vpc"
+  }
 }
 
 resource "aws_subnet" "public" {
