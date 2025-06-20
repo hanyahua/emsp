@@ -127,7 +127,7 @@ resource "aws_instance" "emsp" {
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public.id
   key_name                    = var.key_name
-  security_groups             = [aws_security_group.emsp_sg.name]
+  security_groups             = [aws_security_group.emsp_sg.id]
   associate_public_ip_address = true
 
   user_data                   = <<-EOF
