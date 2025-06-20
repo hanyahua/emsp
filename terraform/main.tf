@@ -145,6 +145,7 @@ resource "aws_instance" "emsp" {
                 -e DB_USERNAME=${var.db_username} \
                 -e DB_PASSWORD=${var.db_password} \
                 -e DB_NAME=${var.db_name} \
+                -e SPRING_PROFILES_ACTIVE=${var.profiles_active} \
                 ${var.docker_image}
       EOF
   tags = {

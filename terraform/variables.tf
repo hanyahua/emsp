@@ -29,3 +29,7 @@ variable "db_password" {
 variable "db_name" {
   default = "emsp"
 }
+
+variable "profiles_active" {
+  default = "prod"
+}
