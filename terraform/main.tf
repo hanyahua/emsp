@@ -17,6 +17,14 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
   vpc_id = aws_vpc.main.id
   cidr_block = "10.0.1.0/24"
+  availability_zone = var.aws_region
+  map_public_ip_on_launch = true
+}
+
+resource "aws_subnet" "publicB" { //  The DB subnet group doesn't meet Availability Zone (AZ) coverage requirement. Current AZ coverage: ap-northeast-1c. Add subnets to cover at least 2 AZs.
+  vpc_id = aws_vpc.main.id
+  cidr_block = "10.0.2.0/24"
+  availability_zone = "ap-northeast-1c"
   map_public_ip_on_launch = true
 }
 
