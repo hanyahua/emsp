@@ -128,6 +128,8 @@ resource "aws_db_instance" "mysql" {
 }
 
 resource "aws_instance" "emsp" {
+  count = var.instance_count
+
   ami = "ami-054400ced365b82a0" #Ubuntu Server 24.04 LTS (HVM)
   instance_type               = var.instance_type
   subnet_id                   = aws_subnet.public.id
