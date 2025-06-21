@@ -152,7 +152,7 @@ resource "aws_instance" "emsp" {
                 ${var.docker_image}
       EOF
   tags = {
-    Name = "emsp_instance_${var.instance_count}"
+    Name = "emsp_instance_${count.index}"
   }
 }
 
