@@ -12,4 +12,4 @@ spring:
     password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 app:
-  id: 0
+  id: ${WORKER_ID}

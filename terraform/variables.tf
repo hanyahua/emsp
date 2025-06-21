@@ -33,3 +33,12 @@ variable "db_name" {
 variable "profiles_active" {
   default = "prod"
 }
+
+variable "instance_count" {
+  type    = number
+  default = 2
+  validation {
+    condition     = var.instance_count <= 32
+    error_message = "max 32 Worker ID。"
+  }
+}
