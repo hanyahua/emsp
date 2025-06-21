@@ -57,6 +57,27 @@ resource "aws_route_table_association" "a" {
   route_table_id = aws_route_table.r.id
 }
 
+# load balance security_group
+resource "aws_security_group" "alb_sg" {
+  name        = "alb_sg"
+  description = "Allow HTTP and HTTPS"
+  vpc_id      = aws_vpc.main.id
+
+  ingress {
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
 resource "aws_security_group" "emsp_sg" {
   name        = "emsp_sg"
   description = "Allow HTTP SSH"
@@ -64,17 +85,10 @@ resource "aws_security_group" "emsp_sg" {
 
   ingress {
       description = "HTTP"
-      from_port   = 80
-      to_port     = 80
+      from_port   = 8080
+      to_port     = 8080
       protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
-  }
-  ingress  {
-      description = "SSH"
-      from_port   = 22
-      to_port     = 22
-      protocol    = "tcp"
-      cidr_blocks = ["0.0.0.0/0"]
+      security_groups = [aws_security_group.alb_sg.id]
   }
 
   egress {
@@ -145,7 +159,7 @@ resource "aws_instance" "emsp" {
       sudo apt update -y
       apt install docker.io -y
       systemctl start docker
-      docker run -d -p 80:8080 \
+      docker run -d -p 8080:8080 \
                 -e DB_HOST=${aws_db_instance.mysql.address} \
                 -e DB_USERNAME=${var.db_username} \
                 -e DB_PASSWORD=${var.db_password} \
@@ -158,6 +172,51 @@ resource "aws_instance" "emsp" {
     Name = "emsp_instance_${count.index}"
   }
 }
+
+# ALB
+resource "aws_lb" "emsp_alb" {
+  name               = "emsp-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.alb_sg.id]
+  subnets            = [aws_subnet.public.id, aws_subnet.publicB.id]
+}
+
+resource "aws_lb_target_group" "emsp_tg" {
+  name     = "emsp-tg"
+  port     = 8080
+  protocol = "HTTP"
+  vpc_id   = aws_vpc.main.id
+
+  health_check {
+    path                = "/health"
+    port                = "8080"
+    protocol            = "HTTP"
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 5
+    interval            = 30
+  }
+}
+
+resource "aws_lb_target_group_attachment" "emsp_tg_attachment" {
+  count            = var.instance_count
+  target_group_arn = aws_lb_target_group.emsp_tg.arn
+  target_id        = aws_instance.emsp[count.index].id
+  port             = 8080
+}
+
+resource "aws_lb_listener" "http" {
+  load_balancer_arn = aws_lb.emsp_alb.arn
+  port              = "80"
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.emsp_tg.arn
+  }
+}
+
 
 
 
