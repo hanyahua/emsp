@@ -139,6 +139,9 @@ resource "aws_instance" "emsp" {
 
   user_data                   = <<-EOF
       #!/bin/bash
+      exec > /tmp/init.log 2>&1
+      set -x
+
       sudo apt update -y
       apt install docker.io -y
       systemctl start docker
@@ -147,7 +150,7 @@ resource "aws_instance" "emsp" {
                 -e DB_USERNAME=${var.db_username} \
                 -e DB_PASSWORD=${var.db_password} \
                 -e DB_NAME=${var.db_name} \
-                -e WORKER_ID=${count.index}
+                -e WORKER_ID=${count.index} \
                 -e SPRING_PROFILES_ACTIVE=${var.profiles_active} \
                 ${var.docker_image}
       EOF
