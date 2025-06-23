@@ -151,23 +151,16 @@ resource "aws_instance" "emsp" {
   security_groups             = [aws_security_group.emsp_sg.id]
   associate_public_ip_address = true
 
-  user_data                   = <<-EOF
-      #!/bin/bash
-      exec > /tmp/init.log 2>&1
-      set -x
+  user_data = templatefile("init-ecs.sh", {
+    DB_HOST              = aws_db_instance.mysql.address,
+    DB_USERNAME          = var.db_username,
+    DB_PASSWORD          = var.db_password,
+    DB_NAME              = var.db_name,
+    WORKER_ID            = count.index,
+    SPRING_PROFILES_ACTIVE = var.profiles_active,
+    DOCKER_IMAGE         = var.docker_image
+  })
 
-      sudo apt update -y
-      apt install docker.io -y
-      systemctl start docker
-      docker run -d -p 8080:8080 \
-                -e DB_HOST=${aws_db_instance.mysql.address} \
-                -e DB_USERNAME=${var.db_username} \
-                -e DB_PASSWORD=${var.db_password} \
-                -e DB_NAME=${var.db_name} \
-                -e WORKER_ID=${count.index} \
-                -e SPRING_PROFILES_ACTIVE=${var.profiles_active} \
-                ${var.docker_image}
-      EOF
   tags = {
     Name = "emsp_instance_${count.index}"
   }
