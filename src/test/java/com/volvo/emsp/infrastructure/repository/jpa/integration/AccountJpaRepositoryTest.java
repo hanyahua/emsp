@@ -1,8 +1,10 @@
-package com.volvo.emsp.infrastructure.jpa.repository.integration;
+package com.volvo.emsp.infrastructure.repository.jpa.integration;
 
 import com.volvo.emsp.domain.model.Account;
 import com.volvo.emsp.domain.model.Email;
-import com.volvo.emsp.infrastructure.jpa.repository.AccountJapRepository;
+import com.volvo.emsp.domain.service.IdGenerator;
+import com.volvo.emsp.domain.service.impl.TestIdGenerator;
+import com.volvo.emsp.infrastructure.repository.jpa.AccountJapRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,8 @@ public class AccountJpaRepositoryTest {
 
     @Autowired
     private AccountJapRepository accountJpaRepository;
+    private final IdGenerator idGenerator = new TestIdGenerator();
+
 
     private static final List<String[]> accountValues = Arrays.asList(
             new String[] {"leoabby@outlook.com", "CN8VOLSXZGQEN0",},
@@ -40,7 +44,7 @@ public class AccountJpaRepositoryTest {
     @BeforeEach
     void init () {
         for (String[] accountValue : accountValues) {
-            Account account = new Account(accountValue[0], accountValue[1]);
+            Account account = newAccount(accountValue[0], accountValue[1]);
             accountJpaRepository.save(account);
         }
     }
@@ -50,7 +54,7 @@ public class AccountJpaRepositoryTest {
     void testSave() {
         String email = "leoabby4@outlook.com";
         String contractId = "CN8VOLSXZGQEN9";
-        Account account = new Account(email, contractId);
+        Account account = newAccount(email, contractId);
         accountJpaRepository.save(account);
         Optional<Account> optionalAccount = accountJpaRepository.findByEmail(Email.of(email));
 
@@ -98,7 +102,7 @@ public class AccountJpaRepositoryTest {
 
     @Test
     void findById() {
-        Account account = new Account("leoabby@outlook5.com", "CN8VOLSXZGQEN9");
+        Account account = newAccount("leoabby@outlook5.com", "CN8VOLSXZGQEN9");
         Account saved = accountJpaRepository.save(account);
         Optional<Account> optionalAccount = accountJpaRepository.findById(saved.getAccountId());
 
@@ -115,6 +119,11 @@ public class AccountJpaRepositoryTest {
 
         // assert
         assertTrue(exists, "account should exist");
+    }
+
+    @SuppressWarnings("SameParameterValue")
+    private Account newAccount(String email, String contractId) {
+        return new Account(idGenerator.nextId(), email, contractId);
     }
 }
 

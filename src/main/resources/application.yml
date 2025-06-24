@@ -1,15 +1,32 @@
 spring:
   application:
     name: eMSP
+
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
     generate-ddl: true
+
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/emsp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+#  data:
+#    redis:
+#      host: localhost
+#      port: 6379
+
+  task:
+    execution:
+      pool:
+        core-size: 2
+        max-size: 4
+        queue-capacity: 50
+    scheduling:
+      pool:
+        size: 2
 app:
   id: 0

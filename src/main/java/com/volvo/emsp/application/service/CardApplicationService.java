@@ -6,6 +6,8 @@ import com.volvo.emsp.domain.model.Account;
 import com.volvo.emsp.domain.model.Card;
 import com.volvo.emsp.domain.repository.AccountRepository;
 import com.volvo.emsp.domain.repository.CardRepository;
+import com.volvo.emsp.domain.service.DomainEventPublisher;
+import com.volvo.emsp.domain.service.IdGenerator;
 import com.volvo.emsp.execption.BadRequestException;
 import com.volvo.emsp.execption.ResourceAlreadyExistsException;
 import com.volvo.emsp.execption.ResourceNotFoundException;
@@ -24,12 +26,21 @@ import java.util.Optional;
 public class CardApplicationService {
 
     private static final Logger log = LoggerFactory.getLogger(CardApplicationService.class);
+    private final IdGenerator idGenerator;
     private final CardRepository cardRepository;
     private final AccountRepository accountRepository;
+    private final DomainEventPublisher eventPublisher;
 
-    public CardApplicationService(CardRepository cardRepository, AccountRepository accountRepository) {
+
+    public CardApplicationService(
+            IdGenerator idGenerator,
+            CardRepository cardRepository,
+            AccountRepository accountRepository,
+            DomainEventPublisher eventPublisher) {
+        this.idGenerator = idGenerator;
         this.cardRepository = cardRepository;
         this.accountRepository = accountRepository;
+        this.eventPublisher = eventPublisher;
     }
 
     @Transactional
@@ -44,7 +55,7 @@ public class CardApplicationService {
         if (cardRepository.existsByVisibleNumber(createCardCommand.getVisibleNumber())) {
             throw new ResourceAlreadyExistsException("Card with visible number already exists: " + createCardCommand.getVisibleNumber());
         }
-        Card card = new Card(createCardCommand.getRfidUid(), createCardCommand.getVisibleNumber());
+        Card card = new Card(idGenerator.nextId(), createCardCommand.getRfidUid(), createCardCommand.getVisibleNumber());
         card = cardRepository.save(card);
         return CardDTO.of(card);
     }
@@ -86,6 +97,9 @@ public class CardApplicationService {
         Account account = optionalAccount.get();
         card.assignTo(account);
         cardRepository.save(card);
+
+        card.getDomainEvents().forEach(eventPublisher::publish);
+        card.clearDomainEvents();
     }
 
 

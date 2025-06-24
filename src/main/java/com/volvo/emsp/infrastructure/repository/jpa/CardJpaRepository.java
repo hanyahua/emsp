@@ -1,4 +1,4 @@
-package com.volvo.emsp.infrastructure.jpa.repository;
+package com.volvo.emsp.infrastructure.repository.jpa;
 
 import com.volvo.emsp.domain.model.Card;
 import com.volvo.emsp.domain.repository.CardRepository;

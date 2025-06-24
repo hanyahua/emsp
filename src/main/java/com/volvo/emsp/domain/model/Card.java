@@ -1,12 +1,15 @@
 package com.volvo.emsp.domain.model;
 
+import com.volvo.emsp.domain.event.CardAssignedEvent;
 import com.volvo.emsp.domain.model.enums.AccountStatus;
 import com.volvo.emsp.domain.model.enums.CardStatus;
-
 import com.volvo.emsp.execption.InvalidBusinessOperationException;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.*;
+
 import java.time.LocalDateTime;
+
+import static java.util.Objects.requireNonNull;
 
 /**
  * Card entity representing the charging card linked to an account.
@@ -17,13 +20,12 @@ import java.time.LocalDateTime;
         @Index(name = "idx_last_updated", columnList = "last_updated"),
         @Index(name = "idx_rfid_uid", columnList = "rfid_uid")
 })
-public class Card {
+public class Card extends AggregateRoot {
 
     /**
      * Unique identifier for the card.
      */
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "card_id")
     private Long cardId;
 
@@ -77,7 +79,7 @@ public class Card {
     /**
      * Constructor to initialize Card with RFID UID and Visible Number.
      */
-    public Card(String rfidUid, String visibleNumber) {
+    public Card(Long cardId, String rfidUid, String visibleNumber) {
         if (StringUtils.isBlank(rfidUid)) {
             throw new IllegalArgumentException("RFID UID must not be blank.");
         }
@@ -90,11 +92,18 @@ public class Card {
         if (visibleNumber.length() > 100) {
             throw new IllegalArgumentException("RFID UID must be less than or equal to 255 characters.");
         }
+        this.cardId = requireNonNull(cardId, "Card ID must not be null.");
         this.rfidUid = rfidUid;
         this.visibleNumber = visibleNumber;
         this.status = CardStatus.CREATED;
         this.createdAt = LocalDateTime.now();
         this.lastUpdated = LocalDateTime.now();
+    }
+
+    @Override
+    @Transient
+    protected Long getId() {
+        return getCardId();
     }
 
     public void activate() {
@@ -126,6 +135,12 @@ public class Card {
         this.contractId = account.getContractId();
         this.status = CardStatus.ASSIGNED;
         this.lastUpdated = LocalDateTime.now();
+
+        addDomainEvent(new CardAssignedEvent(
+                this.eventSource(),
+                this.getCardId(),
+                account.getAccountId()
+        ));
     }
 
     // Getters and Setters

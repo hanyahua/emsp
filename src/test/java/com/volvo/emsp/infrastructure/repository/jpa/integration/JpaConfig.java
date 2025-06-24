@@ -1,4 +1,4 @@
-package com.volvo.emsp.infrastructure.jpa.repository.integration;
+package com.volvo.emsp.infrastructure.repository.jpa.integration;
 
 import org.springframework.context.annotation.Configuration;
 

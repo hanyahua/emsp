@@ -6,6 +6,7 @@ import com.volvo.emsp.domain.model.Email;
 import com.volvo.emsp.domain.model.enums.AccountStatus;
 import com.volvo.emsp.domain.repository.AccountRepository;
 import com.volvo.emsp.domain.service.EmaidGenerator;
+import com.volvo.emsp.domain.service.IdGenerator;
 import com.volvo.emsp.execption.BadRequestException;
 import com.volvo.emsp.execption.InvalidBusinessOperationException;
 import com.volvo.emsp.execption.ResourceAlreadyExistsException;
@@ -25,10 +26,16 @@ import java.util.Optional;
 public class AccountApplicationService {
 
     private static final Logger log = LoggerFactory.getLogger(AccountApplicationService.class);
+    private final IdGenerator idGenerator;
     private final AccountRepository accountRepository;
     private final EmaidGenerator emaidGenerator;
 
-    public AccountApplicationService(AccountRepository accountRepository, EmaidGenerator emaidGenerator) {
+    public AccountApplicationService(
+            IdGenerator idGenerator,
+            AccountRepository accountRepository,
+            EmaidGenerator emaidGenerator
+    ) {
+        this.idGenerator = idGenerator;
         this.accountRepository = accountRepository;
         this.emaidGenerator = emaidGenerator;
     }
@@ -59,7 +66,7 @@ public class AccountApplicationService {
             throw new ResourceAlreadyExistsException("Email already exists: " + email);
         }
 
-        Account account = new Account(email, emaidGenerator.generateEmaid());
+        Account account = new Account(idGenerator.nextId(), email, emaidGenerator.generateEmaid());
         // save and get
         account = accountRepository.save(account);
 

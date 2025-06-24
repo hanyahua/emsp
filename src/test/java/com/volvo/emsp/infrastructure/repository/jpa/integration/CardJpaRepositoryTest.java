@@ -1,7 +1,9 @@
-package com.volvo.emsp.infrastructure.jpa.repository.integration;
+package com.volvo.emsp.infrastructure.repository.jpa.integration;
 
 import com.volvo.emsp.domain.model.Card;
-import com.volvo.emsp.infrastructure.jpa.repository.CardJpaRepository;
+import com.volvo.emsp.domain.service.IdGenerator;
+import com.volvo.emsp.domain.service.impl.TestIdGenerator;
+import com.volvo.emsp.infrastructure.repository.jpa.CardJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,7 @@ public class CardJpaRepositoryTest {
 
     @Autowired
     private CardJpaRepository cardJapRepository;
+    private final IdGenerator idGenerator = new TestIdGenerator();
 
     private static final List<String[]> cards = Arrays.asList(
             new String[]  {"rfidUid0001", "0001"},
@@ -40,7 +43,7 @@ public class CardJpaRepositoryTest {
     @BeforeEach
     void init () {
         for (String[] cardValue : cards) {
-            Card card = new Card(cardValue[0], cardValue[1]);
+            Card card = newCard(cardValue[0], cardValue[1]);
             cardJapRepository.save(card);
         }
     }
@@ -49,7 +52,7 @@ public class CardJpaRepositoryTest {
     void testSave() {
         String rfidUid = "rfidUid0010";
         String visibleNumber = "0010";
-        Card newCard = new Card(rfidUid, visibleNumber);
+        Card newCard = newCard(rfidUid, visibleNumber);
         cardJapRepository.save(newCard);
         Optional<Card> optionalCard = cardJapRepository.findByRfidUid(rfidUid);
 
@@ -75,7 +78,7 @@ public class CardJpaRepositoryTest {
     void findById() {
         String rfidUid = "rfidUid0010";
         String visibleNumber = "0010";
-        Card newCard = new Card(rfidUid, visibleNumber);
+        Card newCard = newCard(rfidUid, visibleNumber);
         Card card = cardJapRepository.save(newCard);
         Optional<Card> optionalCard = cardJapRepository.findById(card.getCardId());
 
@@ -85,5 +88,8 @@ public class CardJpaRepositoryTest {
         assertEquals(newCard.getCardId(), savedAccount.getCardId(), "id should same");
     }
 
+    private Card newCard(String rfidUid, String visibleNumber) {
+        return new Card(idGenerator.nextId(), rfidUid, visibleNumber);
+    }
 }
 

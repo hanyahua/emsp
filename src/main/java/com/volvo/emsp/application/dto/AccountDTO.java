@@ -13,6 +13,9 @@ public class AccountDTO {
     private String status;
     private LocalDateTime lastUpdated;
 
+    public AccountDTO() {
+    }
+
     public AccountDTO(Long id, String email, String emaid, String status, LocalDateTime lastUpdated) {
         this.accountId = id;
         this.email = email;

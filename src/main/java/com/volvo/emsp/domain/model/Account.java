@@ -5,6 +5,7 @@ import com.volvo.emsp.execption.InvalidBusinessOperationException;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "accounts", uniqueConstraints = {
@@ -12,10 +13,9 @@ import java.time.LocalDateTime;
 }, indexes = {
         @Index(name = "account_idx_last_updated", columnList = "last_updated")
 })
-public class Account {
+public class Account extends AggregateRoot {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long accountId;
 
     @Column(nullable = false, unique = true)
@@ -37,18 +37,26 @@ public class Account {
         // JPA
     }
 
-    public Account(String email, String contractId) {
+    public Account(Long accountId, String email, String contractId) {
+        this.accountId = Objects.requireNonNull(accountId);
         this.email = new Email(email);
         this.contractId = new Emaid(contractId);
         this.status = AccountStatus.CREATED;
         this.lastUpdated = LocalDateTime.now();
     }
 
-    public Account(Email email, Emaid contractId) {
+    public Account(Long accountId, Email email, Emaid contractId) {
+        this.accountId = Objects.requireNonNull(accountId);
         this.email = email;
         this.contractId = contractId;
         this.status = AccountStatus.CREATED;
         this.lastUpdated = LocalDateTime.now();
+    }
+
+    @Override
+    @Transient
+    protected Long getId() {
+        return getAccountId();
     }
 
     public void activate() {
