@@ -1,6 +1,7 @@
 
 package com.volvo.emsp.infrastructure.service.integration;
 
+import com.volvo.emsp.BaseIntegrationTest;
 import com.volvo.emsp.domain.event.DomainEvent;
 import com.volvo.emsp.domain.event.EventSource;
 import com.volvo.emsp.domain.repository.DomainEventRepository;
@@ -10,8 +11,6 @@ import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
@@ -24,9 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ActiveProfiles("test")
-public class DomainEventLockServiceJpaImplTest {
+public class DomainEventLockServiceJpaImplTest extends BaseIntegrationTest {
 
     @Autowired
     private EntityManager entityManager;

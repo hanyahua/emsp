@@ -1,5 +1,6 @@
 package com.volvo.emsp.infrastructure.repository.jpa.integration;
 
+import com.volvo.emsp.BaseDataJpaIntegrationTest;
 import com.volvo.emsp.domain.model.Account;
 import com.volvo.emsp.domain.model.Email;
 import com.volvo.emsp.domain.service.IdGenerator;
@@ -8,11 +9,9 @@ import com.volvo.emsp.infrastructure.repository.jpa.AccountJapRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -24,11 +23,9 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ActiveProfiles("test")
-@DataJpaTest
 @Import({JpaConfig.class, AccountJapRepository.class}) // custom repository need this
 @Transactional
-public class AccountJpaRepositoryTest {
+public class AccountJpaRepositoryTest extends BaseDataJpaIntegrationTest {
 
     @Autowired
     private AccountJapRepository accountJpaRepository;

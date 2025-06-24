@@ -1,12 +1,14 @@
 
 package com.volvo.emsp.infrastructure.service.integration;
 
+import com.volvo.emsp.BaseIntegrationTest;
+import com.volvo.emsp.TestRedisConfiguration;
 import com.volvo.emsp.infrastructure.service.DomainEventLockServiceRedisImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
+import org.springframework.context.annotation.Import;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.UUID;
 import java.util.concurrent.*;
@@ -15,18 +17,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static java.util.concurrent.Executors.newFixedThreadPool;
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
-@ActiveProfiles("test")
-class DomainEventLockServiceRedisImplTest {
+
+@Import(TestRedisConfiguration.class)
+class DomainEventLockServiceRedisImplTest extends BaseIntegrationTest {
 
     @Autowired
+    private StringRedisTemplate redisTemplate;
     private DomainEventLockServiceRedisImpl domainEventLockService;
-
     private final String eventId = UUID.randomUUID().toString();
-
 
     @BeforeEach
     void setUp() {
+        domainEventLockService = new DomainEventLockServiceRedisImpl(redisTemplate);
     }
 
     @Test

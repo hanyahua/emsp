@@ -1,5 +1,6 @@
 package com.volvo.emsp.infrastructure.repository.jpa.integration;
 
+import com.volvo.emsp.BaseDataJpaIntegrationTest;
 import com.volvo.emsp.domain.model.Card;
 import com.volvo.emsp.domain.service.IdGenerator;
 import com.volvo.emsp.domain.service.impl.TestIdGenerator;
@@ -7,11 +8,9 @@ import com.volvo.emsp.infrastructure.repository.jpa.CardJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,10 +22,9 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@ActiveProfiles("test")
-@DataJpaTest
+
 @Import({JpaConfig.class, CardJpaRepository.class}) // custom repository need this
-public class CardJpaRepositoryTest {
+public class CardJpaRepositoryTest extends BaseDataJpaIntegrationTest {
 
     @Autowired
     private CardJpaRepository cardJapRepository;

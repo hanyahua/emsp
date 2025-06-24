@@ -26,7 +26,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
-@ActiveProfiles("test")
+@ActiveProfiles("integration-test")
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional

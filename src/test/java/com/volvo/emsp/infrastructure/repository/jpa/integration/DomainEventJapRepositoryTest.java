@@ -1,5 +1,6 @@
 package com.volvo.emsp.infrastructure.repository.jpa.integration;
 
+import com.volvo.emsp.BaseDataJpaIntegrationTest;
 import com.volvo.emsp.config.JacksonConfig;
 import com.volvo.emsp.domain.event.CardAssignedEvent;
 import com.volvo.emsp.domain.event.DomainEvent;
@@ -8,9 +9,7 @@ import com.volvo.emsp.domain.event.enums.EventStatus;
 import com.volvo.emsp.infrastructure.repository.jpa.DomainEventJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
@@ -18,10 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@DataJpaTest
-@ActiveProfiles("test")
+
 @Import({JpaConfig.class, DomainEventJpaRepository.class, JacksonConfig.class})
-class DomainEventJapRepositoryTest {
+class DomainEventJapRepositoryTest extends BaseDataJpaIntegrationTest {
 
     @Autowired
     private DomainEventJpaRepository repository;

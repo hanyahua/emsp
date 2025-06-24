@@ -58,7 +58,7 @@ public class DomainEventLockServiceRedisImpl implements DomainEventLockService {
         try {
             redisTemplate.getRequiredConnectionFactory().getConnection().ping();
         } catch (Exception e) {
-            throw new IllegalStateException("can not connect redis", e);
+            log.warn("can not connect redis {}", e.getMessage());
         }
     }
 
