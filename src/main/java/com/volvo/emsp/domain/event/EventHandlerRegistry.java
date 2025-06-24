@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Component
 public class EventHandlerRegistry {
@@ -65,6 +66,7 @@ public class EventHandlerRegistry {
 
     @SuppressWarnings("unchecked")
     private <T extends DomainEvent>  void _registerHandler(EventHandler<T> handler) {
+        Objects.requireNonNull(handler, "handler must not be null");
         if (isLambda(handler)) {
             throw new IllegalArgumentException("can not register a lambda, use named class or unnamed class");
         }
