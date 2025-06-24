@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.ServletWebRequest;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.Date;
@@ -54,6 +55,7 @@ public class RestExceptionHandler {
     @ExceptionHandler({
             BadRequestException.class,
             HttpMessageNotReadableException.class,
+            MethodArgumentTypeMismatchException.class,
             IllegalArgumentException.class,
     })
     public ResponseEntity<FormatedErrorResponse> handleBadRequest(
