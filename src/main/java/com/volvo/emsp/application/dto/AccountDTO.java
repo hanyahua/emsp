@@ -1,12 +1,15 @@
 package com.volvo.emsp.application.dto;
 
 import com.volvo.emsp.domain.model.Account;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
 @SuppressWarnings("unused")
+@Schema(description = "Account Data Transfer Object")
 public class AccountDTO {
 
+    @Schema(description = "Account ID", example = "12391298439")
     private Long accountId;
     private String email;
     private String emaid;

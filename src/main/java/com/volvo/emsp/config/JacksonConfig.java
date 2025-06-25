@@ -6,9 +6,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
-import org.springframework.data.web.config.SpringDataJacksonConfiguration;
-import org.springframework.data.web.config.SpringDataWebSettings;
 
 @Configuration
 public class JacksonConfig {
@@ -18,9 +15,9 @@ public class JacksonConfig {
     public ObjectMapper objectMapper() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
-        mapper.registerModule(new SpringDataJacksonConfiguration.PageModule(
-                new SpringDataWebSettings(EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO) // simple page model
-        ));
+//        mapper.registerModule(new SpringDataJacksonConfiguration.PageModule(
+//                new SpringDataWebSettings(EnableSpringDataWebSupport.PageSerializationMode.VIA_DTO) // simple page model
+//        ));
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         return mapper;
 
