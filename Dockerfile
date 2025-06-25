@@ -12,9 +12,11 @@ RUN apt-get install -y iputils-ping net-tools && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-COPY emsp.jar /emsp.jar
-COPY start.sh /start.sh
+WORKDIR /app
 
-RUN chmod +x /start.sh
+COPY emsp.jar /app/emsp.jar
+COPY start.sh /app/start.sh
 
-ENTRYPOINT ["/start.sh"]
+RUN chmod +x /app/start.sh
+
+ENTRYPOINT ["/app/start.sh"]
