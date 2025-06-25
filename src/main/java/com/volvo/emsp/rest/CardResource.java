@@ -63,6 +63,23 @@ public class CardResource {
                                     """
                             )
                     )
+            ),
+            @ApiResponse(responseCode = "409", description = "Resource already exists",
+                    content = @Content(
+                            mediaType = "application/json",
+                            schema = @Schema(implementation = ErrorResponse.class),
+                            examples = @ExampleObject(value = """
+                                    {
+                                       "status": 409,
+                                       "title": "Resource already exists",
+                                       "details": [
+                                         "Card with RFID UID already exists: string"
+                                       ],
+                                       "path": "/api/cards",
+                                       "timestamp": "2025-06-25T02:51:28.135Z"
+                                     }
+                                    """)
+                    )
             )
     })
     @PostMapping("/api/cards")
