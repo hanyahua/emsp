@@ -54,18 +54,20 @@ This project implements an **Electric Mobility Service Provider (eMSP) Account &
 3. Install **Docker** (for containerized execution).
 
 ### Quick Start (H2 Database):
-1. **Clone the Repository**:
+**Clone the Repository**:
 ``` bash
    git clone https://github.com/hanyahua/emsp.git
    cd emsp
 ```
-2. **Run Locally**: Start the application with H2 as the default in-memory database:
+**Run Locally**: Start the application with H2 as the default in-memory database:
 ``` bash
    mvn spring-boot:run
 ```
 The APIs will be available on [http://localhost:8080](http://localhost:8080).
 
-3. **Run in Docker**: Build the Docker image:
+**Run in Docker**: 
+
+Build the Docker image:
 ``` bash
    docker build -t emsp .
 ```
@@ -73,7 +75,7 @@ Start the container:
 ``` bash
    docker run -p 8080:8080 emsp
 ```
-4. **Run Tests**: Execute unit and integration tests:
+**Run Tests**: Execute unit and integration tests:
 ``` bash
    mvn test
 ```
