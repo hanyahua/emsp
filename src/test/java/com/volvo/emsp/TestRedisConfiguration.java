@@ -1,12 +1,12 @@
 package com.volvo.emsp;
 
 import jakarta.annotation.PreDestroy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import redis.embedded.RedisServer;
 
 import java.io.IOException;
@@ -18,25 +18,33 @@ public class TestRedisConfiguration {
 
     private RedisServer redisServer;
 
-    @Autowired
-    private RedisConnectionFactory redisConnectionFactory;
+    private int redisPort;
 
     @Bean
     public RedisServer redisServer(@Value("${spring.data.redis.port:6379}") int defaultPort) throws IOException {
-        int port = findAvailablePort(defaultPort);
-        this.redisServer = new RedisServer(port);
+        this.redisPort = findAvailablePort(defaultPort);
+        this.redisServer = new RedisServer(redisPort);
         redisServer.start();
-        System.out.println("Embedded Redis started on port: " + port);
+        System.out.println("Embedded Redis started on port: " + redisPort);
         return this.redisServer;
+    }
+
+    @Bean
+    public LettuceConnectionFactory redisConnectionFactory() {
+        RedisStandaloneConfiguration redisConfig = new RedisStandaloneConfiguration();
+        redisConfig.setHostName("localhost");
+        redisConfig.setPort(redisPort); //
+        return new LettuceConnectionFactory(redisConfig);
+    }
+
+    @Bean
+    public StringRedisTemplate stringRedisTemplate(LettuceConnectionFactory factory) {
+        return new StringRedisTemplate(factory);
     }
 
     @PreDestroy
     public void stopRedis() {
         try {
-            if (redisConnectionFactory instanceof LettuceConnectionFactory) {
-                ((LettuceConnectionFactory) redisConnectionFactory).destroy();
-            }
-
             if (redisServer != null && redisServer.isActive()) {
                 redisServer.stop();
                 System.out.println("Embedded Redis stopped");
