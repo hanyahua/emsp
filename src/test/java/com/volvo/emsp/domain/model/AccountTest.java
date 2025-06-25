@@ -5,7 +5,7 @@ import com.volvo.emsp.domain.service.IdGenerator;
 import com.volvo.emsp.domain.service.impl.TestIdGenerator;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,7 +61,7 @@ class AccountTest {
     @Test
     public void testLastUpdatedTimeChanged() throws InterruptedException {
         Account account = newAccount(email, contractId);
-        LocalDateTime beforeChange = LocalDateTime.now().minusSeconds(1);
+        OffsetDateTime beforeChange = OffsetDateTime.now().minusSeconds(1);
         Thread.sleep(20);
         account.activate();
         assertTrue(account.getLastUpdated().isAfter(beforeChange));

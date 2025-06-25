@@ -1,13 +1,11 @@
 package com.volvo.emsp.rest.integration;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.volvo.emsp.application.command.ChangeAccountStatusCommand;
+import com.volvo.emsp.application.command.ChangeCardStatusCommand;
 import com.volvo.emsp.application.command.CreateAccountCommand;
 import com.volvo.emsp.application.command.CreateCardCommand;
-import com.volvo.emsp.application.command.ChangeCardStatusCommand;
 import com.volvo.emsp.application.dto.AccountDTO;
 import com.volvo.emsp.application.dto.CardDTO;
 import com.volvo.emsp.domain.model.enums.AccountStatus;
@@ -24,7 +22,12 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDateTime;
+
+import java.time.OffsetDateTime;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ActiveProfiles("integration-test")
 @SpringBootTest
@@ -149,8 +152,8 @@ public class CardResourceIntegrationTest {
 
     @Test
     void findCardsWithDateRangeOk() throws Exception {
-        LocalDateTime from = LocalDateTime.now().minusDays(1);
-        LocalDateTime to = LocalDateTime.now().plusDays(1);
+        OffsetDateTime from = OffsetDateTime.now().minusDays(1);
+        OffsetDateTime to = OffsetDateTime.now().plusDays(1);
         MvcResult result = mockMvc.perform(get("/api/cards")
                         .param("lastUpdatedFrom", from.toString())
                         .param("lastUpdatedTo", to.toString()))
@@ -163,8 +166,8 @@ public class CardResourceIntegrationTest {
 
     @Test
     void findCardsWithDateRangeShouldNotFilterResults() throws Exception {
-        LocalDateTime from = LocalDateTime.now().minusDays(2);
-        LocalDateTime to = LocalDateTime.now().minusDays(1);
+        OffsetDateTime from = OffsetDateTime.now().minusDays(2);
+        OffsetDateTime to = OffsetDateTime.now().minusDays(1);
         MvcResult result = mockMvc.perform(get("/api/cards")
                         .param("lastUpdatedFrom", from.toString())
                         .param("lastUpdatedTo", to.toString()))

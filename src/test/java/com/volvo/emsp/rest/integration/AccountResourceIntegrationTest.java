@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @ActiveProfiles("integration-test")
 @SpringBootTest
@@ -115,8 +115,8 @@ public class AccountResourceIntegrationTest {
 
     @Test
     void findAccountsWithDateRangeShouldFilterResults() throws Exception {
-        LocalDateTime from = LocalDateTime.now().minusDays(1);
-        LocalDateTime to = LocalDateTime.now().plusDays(1);
+        OffsetDateTime from = OffsetDateTime.now().minusDays(1);
+        OffsetDateTime to = OffsetDateTime.now().plusDays(1);
 
         MvcResult result = mockMvc.perform(get("/api/accounts")
                         .param("lastUpdatedTimeFrom", from.toString())
@@ -132,8 +132,8 @@ public class AccountResourceIntegrationTest {
 
     @Test
     void findAccountsWithDateRangeShouldNotFilterResults() throws Exception {
-        LocalDateTime from = LocalDateTime.now().minusDays(2);
-        LocalDateTime to = LocalDateTime.now().minusDays(1);
+        OffsetDateTime from = OffsetDateTime.now().minusDays(2);
+        OffsetDateTime to = OffsetDateTime.now().minusDays(1);
 
         MvcResult result = mockMvc.perform(get("/api/accounts")
                         .param("lastUpdatedTimeFrom", from.toString())
