@@ -87,7 +87,7 @@ To build and run the Docker image, follow these steps:
 **Run the Docker container**:
    Start the application by running the Docker container:
 ``` bash
-   docker run -p 8080:8080 emsp
+   docker run -p 8080:8080 -d -e SPRING_PROFILES_ACTIVE=  emsp
 ```
 The application will be accessible at [http://localhost:8080](http://localhost:8080).
 
