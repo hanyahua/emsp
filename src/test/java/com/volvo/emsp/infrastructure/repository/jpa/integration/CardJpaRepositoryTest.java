@@ -12,9 +12,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -63,8 +61,8 @@ public class CardJpaRepositoryTest extends BaseDataJpaIntegrationTest {
     @Test
     void findByLastUpdatedTime() {
         Page<Card> accounts = cardJapRepository.findByLastUpdatedBetween(
-                LocalDateTime.of(LocalDate.now(), LocalTime.MIN),
-                LocalDateTime.of(LocalDate.now(), LocalTime.MAX),
+                OffsetDateTime.of(LocalDateTime.of(LocalDate.now(), LocalTime.MIN), ZoneOffset.UTC),
+                OffsetDateTime.of(LocalDateTime.of(LocalDate.now(), LocalTime.MAX), ZoneOffset.UTC),
                 Pageable.ofSize(10)
         );
 

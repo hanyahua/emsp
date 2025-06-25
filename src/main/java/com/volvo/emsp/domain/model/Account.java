@@ -4,7 +4,7 @@ import com.volvo.emsp.domain.model.enums.AccountStatus;
 import com.volvo.emsp.execption.InvalidBusinessOperationException;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @Entity
@@ -31,7 +31,7 @@ public class Account extends AggregateRoot {
     private AccountStatus status;
 
     @Column(name = "last_updated", nullable = false)
-    private LocalDateTime lastUpdated;
+    private OffsetDateTime lastUpdated;
 
     protected Account() {
         // JPA
@@ -42,7 +42,7 @@ public class Account extends AggregateRoot {
         this.email = new Email(email);
         this.contractId = new Emaid(contractId);
         this.status = AccountStatus.CREATED;
-        this.lastUpdated = LocalDateTime.now();
+        this.lastUpdated = OffsetDateTime.now();
     }
 
     public Account(Long accountId, Email email, Emaid contractId) {
@@ -50,7 +50,7 @@ public class Account extends AggregateRoot {
         this.email = email;
         this.contractId = contractId;
         this.status = AccountStatus.CREATED;
-        this.lastUpdated = LocalDateTime.now();
+        this.lastUpdated = OffsetDateTime.now();
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Account extends AggregateRoot {
         return status;
     }
 
-    public LocalDateTime getLastUpdated() {
+    public OffsetDateTime getLastUpdated() {
         return lastUpdated;
     }
 
@@ -95,6 +95,6 @@ public class Account extends AggregateRoot {
             );
         }
         this.status = target;
-        this.lastUpdated = LocalDateTime.now();
+        this.lastUpdated = OffsetDateTime.now();
     }
 }

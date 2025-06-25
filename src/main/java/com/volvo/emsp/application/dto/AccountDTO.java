@@ -3,7 +3,7 @@ package com.volvo.emsp.application.dto;
 import com.volvo.emsp.domain.model.Account;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @SuppressWarnings("unused")
 @Schema(description = "Account Data Transfer Object")
@@ -14,12 +14,12 @@ public class AccountDTO {
     private String email;
     private String emaid;
     private String status;
-    private LocalDateTime lastUpdated;
+    private OffsetDateTime lastUpdated;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(Long id, String email, String emaid, String status, LocalDateTime lastUpdated) {
+    public AccountDTO(Long id, String email, String emaid, String status, OffsetDateTime lastUpdated) {
         this.accountId = id;
         this.email = email;
         this.emaid = emaid;
@@ -53,7 +53,7 @@ public class AccountDTO {
         return status;
     }
 
-    public LocalDateTime getLastUpdated() {
+    public OffsetDateTime getLastUpdated() {
         return lastUpdated;
     }
 
@@ -73,7 +73,7 @@ public class AccountDTO {
         this.status = status;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public void setLastUpdated(OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 }

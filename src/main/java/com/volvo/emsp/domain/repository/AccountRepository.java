@@ -6,7 +6,7 @@ import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 public interface AccountRepository {
@@ -15,7 +15,7 @@ public interface AccountRepository {
 
     Optional<Account> findById(Long accountId);
 
-    Page<Account> findByLastUpdatedBetween(@Nullable LocalDateTime from, @Nullable LocalDateTime to, Pageable pageable);
+    Page<Account> findByLastUpdatedBetween(@Nullable OffsetDateTime from, @Nullable OffsetDateTime to, Pageable pageable);
 
     boolean existsByEmail(Email email);
 

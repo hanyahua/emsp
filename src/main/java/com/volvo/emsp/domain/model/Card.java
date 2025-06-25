@@ -7,7 +7,7 @@ import com.volvo.emsp.execption.InvalidBusinessOperationException;
 import io.micrometer.common.util.StringUtils;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import static java.util.Objects.requireNonNull;
 
@@ -62,13 +62,13 @@ public class Card extends AggregateRoot {
      * The date and time when the card was created.
      */
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private OffsetDateTime createdAt;
 
     /**
      * The date and time when the card's status was last updated.
      */
     @Column(name = "last_updated", nullable = false)
-    private LocalDateTime lastUpdated;
+    private OffsetDateTime lastUpdated;
 
     /**
      * Default constructor.
@@ -96,8 +96,8 @@ public class Card extends AggregateRoot {
         this.rfidUid = rfidUid;
         this.visibleNumber = visibleNumber;
         this.status = CardStatus.CREATED;
-        this.createdAt = LocalDateTime.now();
-        this.lastUpdated = LocalDateTime.now();
+        this.createdAt = OffsetDateTime.now();
+        this.lastUpdated = OffsetDateTime.now();
     }
 
     @Override
@@ -134,7 +134,7 @@ public class Card extends AggregateRoot {
         this.accountId = account.getAccountId();
         this.contractId = account.getContractId();
         this.status = CardStatus.ASSIGNED;
-        this.lastUpdated = LocalDateTime.now();
+        this.lastUpdated = OffsetDateTime.now();
 
         addDomainEvent(new CardAssignedEvent(
                 this.eventSource(),
@@ -169,11 +169,11 @@ public class Card extends AggregateRoot {
         return accountId;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public LocalDateTime getLastUpdated() {
+    public OffsetDateTime getLastUpdated() {
         return lastUpdated;
     }
 
@@ -190,7 +190,7 @@ public class Card extends AggregateRoot {
         }
 
         this.status = newStatus;
-        this.lastUpdated = LocalDateTime.now();
+        this.lastUpdated = OffsetDateTime.now();
     }
 
     @Override

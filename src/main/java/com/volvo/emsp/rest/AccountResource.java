@@ -24,7 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @RestController
@@ -113,12 +113,12 @@ public class AccountResource {
     })
     @GetMapping ("/api/accounts")
     public PagedModel<AccountDTO> findAccounts(
-            @Parameter(description = "Start date-time for last updated filter (Format: yyyy-MM-dd'T'HH:mm:ss)",
-                    example = "2025-05-01T10:15:30")
-            @RequestParam(value = "lastUpdatedFrom", required = false) LocalDateTime from,
-            @Parameter(description = "End date-time for last updated filter (Format: yyyy-MM-dd'T'HH:mm:ss)",
-                    example = "2025-12-31T10:15:30")
-            @RequestParam(value = "lastUpdatedTo", required = false) LocalDateTime to,
+            @Parameter(description = "Start date-time for last updated filter (Format: yyyy-MM-dd'T'HH:mm:ssZ)",
+                    example = "2025-05-01T10:15:30Z")
+            @RequestParam(value = "lastUpdatedFrom", required = false) OffsetDateTime from,
+            @Parameter(description = "End date-time for last updated filter (Format: yyyy-MM-dd'T'HH:mm:ssZ)",
+                    example = "2025-12-31T10:15:30Z")
+            @RequestParam(value = "lastUpdatedTo", required = false) OffsetDateTime to,
             @Parameter(description = "Page number (0-based)", example = "0")
             @RequestParam(name = "pageNumber", defaultValue = "0") int page,
             @Parameter(description = "Size of each page", example = "10")

@@ -19,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @Service
@@ -104,7 +104,7 @@ public class CardApplicationService {
 
 
     @Transactional(readOnly = true)
-    public Page<CardDTO> findCards(@Nullable LocalDateTime from, @Nullable LocalDateTime to, Pageable pageable) {
+    public Page<CardDTO> findCards(@Nullable OffsetDateTime from, @Nullable OffsetDateTime to, Pageable pageable) {
         Page<Card> cards = cardRepository.findByLastUpdatedBetween(from, to, pageable);
         return cards.map(CardDTO::of);
     }

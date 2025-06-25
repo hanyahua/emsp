@@ -4,7 +4,7 @@ import com.volvo.emsp.domain.model.Card;
 import com.volvo.emsp.domain.model.enums.CardStatus;
 import io.swagger.v3.oas.annotations.media.Schema;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @SuppressWarnings("unused")
 @Schema(description = "Card Data Transfer Object")
@@ -17,8 +17,8 @@ public class CardDTO {
     private String contractId;  // 合同ID，可能为空
     @Schema(description = "Card status", example = "ASSIGNED")
     private CardStatus status;
-    private LocalDateTime lastUpdated;
-    private LocalDateTime createdAt;
+    private OffsetDateTime lastUpdated;
+    private OffsetDateTime createdAt;
     @Schema(description = "Account ID", example = "12391298439")
     private Long accountId;     // 关联账户ID，可能为空
 
@@ -66,19 +66,19 @@ public class CardDTO {
         this.status = status;
     }
 
-    public LocalDateTime getLastUpdated() {
+    public OffsetDateTime getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(LocalDateTime lastUpdated) {
+    public void setLastUpdated(OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public OffsetDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(OffsetDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

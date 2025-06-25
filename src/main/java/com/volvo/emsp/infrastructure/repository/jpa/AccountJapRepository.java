@@ -8,7 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 
@@ -33,7 +33,7 @@ public class AccountJapRepository implements AccountRepository {
 
     @Override
     public Page<Account> findByLastUpdatedBetween(
-            @Nullable LocalDateTime from, @Nullable LocalDateTime to, Pageable pageable) {
+            @Nullable OffsetDateTime from, @Nullable OffsetDateTime to, Pageable pageable) {
         return springAccountRepository.findByLastUpdatedBetween(from, to, pageable);
     }
 

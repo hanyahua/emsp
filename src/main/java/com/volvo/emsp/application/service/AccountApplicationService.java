@@ -19,7 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @Service
@@ -42,8 +42,8 @@ public class AccountApplicationService {
 
     @Transactional(readOnly = true)
     public Page<AccountDTO> findAccounts(
-            @Nullable LocalDateTime updatedTimeFrom,
-            @Nullable LocalDateTime updatedTimeTo,
+            @Nullable OffsetDateTime updatedTimeFrom,
+            @Nullable OffsetDateTime updatedTimeTo,
             Pageable pageable) {
         Page<Account> accounts = accountRepository.findByLastUpdatedBetween(updatedTimeFrom, updatedTimeTo, pageable);
         // map to dto

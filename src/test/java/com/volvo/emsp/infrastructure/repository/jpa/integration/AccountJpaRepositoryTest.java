@@ -14,9 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -65,8 +63,8 @@ public class AccountJpaRepositoryTest extends BaseDataJpaIntegrationTest {
     @Test
     void findByLastUpdatedTime() {
         Page<Account> accounts = accountJpaRepository.findByLastUpdatedBetween(
-                LocalDateTime.of(LocalDate.now(), LocalTime.MIN),
-                LocalDateTime.of(LocalDate.now(), LocalTime.MAX),
+                OffsetDateTime.of(LocalDateTime.of(LocalDate.now(), LocalTime.MIN),  ZoneOffset.UTC),
+                OffsetDateTime.of(LocalDateTime.of(LocalDate.now(), LocalTime.MAX),  ZoneOffset.UTC),
                 Pageable.ofSize(10)
         );
 

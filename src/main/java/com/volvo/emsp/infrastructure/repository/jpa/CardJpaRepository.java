@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 @Repository
@@ -25,7 +25,7 @@ public class CardJpaRepository implements CardRepository {
     }
 
     @Override
-    public Page<Card> findByLastUpdatedBetween(@Nullable LocalDateTime from, @Nullable LocalDateTime to, Pageable pageable) {
+    public Page<Card> findByLastUpdatedBetween(@Nullable OffsetDateTime from, @Nullable OffsetDateTime to, Pageable pageable) {
         return springCardRepository.findByLastUpdatedBetween(from, to, pageable);
     }
 
