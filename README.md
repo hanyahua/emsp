@@ -59,12 +59,12 @@ This project implements an **Electric Mobility Service Provider (eMSP) Account &
    git clone https://github.com/hanyahua/emsp.git
    cd emsp
 ```
-1. **Run Locally**: Start the application with H2 as the default in-memory database:
+2. **Run Locally**: Start the application with H2 as the default in-memory database:
 ``` bash
    mvn spring-boot:run
 ```
 The APIs will be available on [http://localhost:8080](http://localhost:8080).
-1. **Run in Docker**: Build the Docker image:
+3. **Run in Docker**: Build the Docker image:
 ``` bash
    docker build -t emsp .
 ```
@@ -72,7 +72,7 @@ Start the container:
 ``` bash
    docker run -p 8080:8080 emsp
 ```
-1. **Run Tests**: Execute unit and integration tests:
+4. **Run Tests**: Execute unit and integration tests:
 ``` bash
    mvn test
 ```
@@ -146,11 +146,11 @@ Currently, this project is set up for deployment in any Docker-supported environ
 ``` bash
    docker pull hanyahua/emsp:latest
 ```
-1. Start the container:
+3. Start the container:
 ``` bash
    docker run -p 8080:8080 hanyahua/emsp:latest
 ```
-1. Access the application at `http://<your-server-ip>:8080`.
+4. Access the application at `http://<your-server-ip>:8080`.
 
 ## Directory Structure
 ``` 
