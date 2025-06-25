@@ -6,6 +6,7 @@ import com.volvo.emsp.application.dto.CardDTO;
 import com.volvo.emsp.application.service.CardApplicationService;
 import com.volvo.emsp.domain.model.enums.CardStatus;
 import com.volvo.emsp.execption.InvalidBusinessOperationException;
+import com.volvo.emsp.execption.ResourceNotFoundException;
 import com.volvo.emsp.rest.model.ErrorResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -211,9 +212,9 @@ public class CardResource {
                             examples = @ExampleObject(value = """
                                     {
                                       "status": 404,
-                                      "title": "Not Found",
+                                      "title": "Resource not found",
                                       "details": [
-                                        "Card with id '999' not found"
+                                        "Card not found: 999"
                                       ],
                                       "path": "/api/cards/999",
                                       "timestamp": "2025-06-24T15:25:16.140+00:00"
@@ -226,7 +227,8 @@ public class CardResource {
     @GetMapping("/api/cards/{id}")
     public ResponseEntity<CardDTO> findCard(@PathVariable Long id) {
         Optional<CardDTO> optionalCard = cardApplicationService.findCardById(id);
-        return optionalCard.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        return optionalCard.map(ResponseEntity::ok)
+                .orElseThrow(() -> new ResourceNotFoundException("Card not found: " + id));
     }
 
     // for doc schema
