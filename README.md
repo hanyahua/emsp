@@ -67,14 +67,30 @@ The APIs will be available on [http://localhost:8080](http://localhost:8080).
 
 **Run in Docker**: 
 
-Build the Docker image:
+To build and run the Docker image, follow these steps:
+
+**Package the project (skip tests)**:
+   Before building the Docker image, package the application using Maven while skipping the tests:
+``` bash
+   mvn package -DskipTests
+```
+**Rename the JAR file (optional)**:
+   By default, the packaged JAR file in the `target` directory includes the version in its name. If a fixed JAR filename (e.g., `emsp.jar`) is required, rename it:
+``` bash
+   mv target/emsp-0.0.1-SNAPSHOT.jar emsp.jar
+```
+**Build the Docker image**:
+   Use the Dockerfile included in the project to build the image:
 ``` bash
    docker build -t emsp .
 ```
-Start the container:
+**Run the Docker container**:
+   Start the application by running the Docker container:
 ``` bash
    docker run -p 8080:8080 emsp
 ```
+The application will be accessible at [http://localhost:8080](http://localhost:8080).
+
 **Run Tests**: Execute unit and integration tests:
 ``` bash
    mvn test
