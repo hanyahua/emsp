@@ -20,5 +20,10 @@ spring:
     scheduling:
       pool:
         size: 2
+
+springdoc:
+  swagger-ui:
+    path: /index.html
+
 app:
   id: ${WORKER_ID}

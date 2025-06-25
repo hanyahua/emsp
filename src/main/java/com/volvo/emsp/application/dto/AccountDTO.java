@@ -14,6 +14,8 @@ public class AccountDTO {
     private String email;
     private String emaid;
     private String status;
+
+    @Schema(description = "Last updated timestamp", example = "2020-01-01T00:00:00Z")
     private OffsetDateTime lastUpdated;
 
     public AccountDTO() {

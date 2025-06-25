@@ -15,11 +15,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
 @ComponentScan(basePackages = "com.volvo.emsp")
 public class OpenApiConfiguration {
-    
+
     @Bean
     public OpenAPI openAPI() {
         ApiResponse badRequestResponse = new ApiResponse()

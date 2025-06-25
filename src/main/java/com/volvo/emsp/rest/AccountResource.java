@@ -53,7 +53,7 @@ public class AccountResource {
                                         "Invalid email format: user@example"
                                       ],
                                       "path": "/api/accounts",
-                                      "timestamp": "2025-06-24T15:16:20.379+00:00"
+                                      "timestamp": "2025-06-24T15:16:20.379Z"
                                     }
                                     """
                             )
@@ -71,7 +71,7 @@ public class AccountResource {
                                         "Email already exists: user@example.com"
                                       ],
                                       "path": "/api/accounts",
-                                      "timestamp": "2025-06-24T15:14:57.191+00:00"
+                                      "timestamp": "2025-06-24T15:14:57.191Z"
                                     }
                                     """)
                     )
@@ -104,7 +104,7 @@ public class AccountResource {
                                         "Page index must not be less than zero"
                                       ],
                                       "path": "/api/accounts",
-                                      "timestamp": "2025-06-24T15:23:45.740+00:00"
+                                      "timestamp": "2025-06-24T15:23:45.740Z"
                                     }
                                     """
                             )
@@ -145,7 +145,7 @@ public class AccountResource {
                                         "Account not found: 333"
                                       ],
                                       "path": "/api/accounts/333",
-                                      "timestamp": "2025-06-24T16:02:47.747+00:00"
+                                      "timestamp": "2025-06-24T16:02:47.747Z"
                                     }
                                     """
                             )
@@ -179,7 +179,7 @@ public class AccountResource {
                                         "Account not found: 2222"
                                       ],
                                       "path": "/api/accounts/2222/status",
-                                      "timestamp": "2025-06-24T16:05:31.141+00:00"
+                                      "timestamp": "2025-06-24T16:05:31.141Z"
                                     }
                                     """
                             )
@@ -197,7 +197,7 @@ public class AccountResource {
                                         "Invalid account status: ACTIVATEDDDD"
                                       ],
                                       "path": "/api/accounts/1/status",
-                                      "timestamp": "2025-06-24T16:07:12.726+00:00"
+                                      "timestamp": "2025-06-24T16:07:12.726Z"
                                     }
                                     """
                             )
@@ -215,7 +215,7 @@ public class AccountResource {
                                         "Can not change account status to : CREATED"
                                       ],
                                       "path": "/api/accounts/1/status",
-                                      "timestamp": "2025-06-25T01:12:26.708+00:00"
+                                      "timestamp": "2025-06-25T01:12:26.708Z"
                                     }
                                     """
                             )

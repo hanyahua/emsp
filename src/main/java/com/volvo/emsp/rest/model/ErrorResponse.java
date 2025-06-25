@@ -1,5 +1,6 @@
 package com.volvo.emsp.rest.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.Date;
@@ -25,6 +26,7 @@ public record ErrorResponse(
 
         @Schema(description = "Error timestamp",
                 example = "2025-06-24T10:15:30.123Z")
+        @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSX")
         Date timestamp
 ) {
 

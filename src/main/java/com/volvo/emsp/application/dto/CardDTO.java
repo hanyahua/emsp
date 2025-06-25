@@ -17,8 +17,13 @@ public class CardDTO {
     private String contractId;  // 合同ID，可能为空
     @Schema(description = "Card status", example = "ASSIGNED")
     private CardStatus status;
+
+    @Schema(description = "Last updated time", example = "2023-10-01T12:34:56Z")
     private OffsetDateTime lastUpdated;
+
+    @Schema(description = "Created time", example = "2023-10-01T12:34:56Z")
     private OffsetDateTime createdAt;
+
     @Schema(description = "Account ID", example = "12391298439")
     private Long accountId;     // 关联账户ID，可能为空
 

@@ -58,7 +58,7 @@ public class CardResource {
                                         "Invalid card data"
                                       ],
                                       "path": "/api/cards",
-                                      "timestamp": "2025-06-24T15:16:20.379+00:00"
+                                      "timestamp": "2025-06-24T15:16:20.379Z"
                                     }
                                     """
                             )
@@ -92,7 +92,7 @@ public class CardResource {
                                         "Invalid card status: ASSIG88NED"
                                       ],
                                       "path": "/api/cards/1/status",
-                                      "timestamp": "2025-06-24T16:49:37.635+00:00"
+                                      "timestamp": "2025-06-24T16:49:37.635Z"
                                     }
                                     """
                             )
@@ -110,7 +110,7 @@ public class CardResource {
                                         "Card not found: 2323"
                                       ],
                                       "path": "/api/cards/2323/status",
-                                      "timestamp": "2025-06-24T16:29:38.244+00:00"
+                                      "timestamp": "2025-06-24T16:29:38.244Z"
                                     }
                                     """
                             )
@@ -128,7 +128,7 @@ public class CardResource {
                                         "Only cards in CREATED state can be assigned."
                                       ],
                                       "path": "/api/cards/1/status",
-                                      "timestamp": "2025-06-24T16:46:16.255+00:00"
+                                      "timestamp": "2025-06-24T16:46:16.255Z"
                                     }
                                     """
                             )
@@ -176,7 +176,7 @@ public class CardResource {
                                         "Page index must not be less than zero"
                                       ],
                                       "path": "/api/cards",
-                                      "timestamp": "2025-06-24T15:23:45.740+00:00"
+                                      "timestamp": "2025-06-24T15:23:45.740Z"
                                     }
                                     """
                             )
@@ -217,7 +217,7 @@ public class CardResource {
                                         "Card not found: 999"
                                       ],
                                       "path": "/api/cards/999",
-                                      "timestamp": "2025-06-24T15:25:16.140+00:00"
+                                      "timestamp": "2025-06-24T15:25:16.140Z"
                                     }
                                     """
                             )

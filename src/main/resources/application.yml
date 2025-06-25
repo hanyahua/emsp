@@ -28,8 +28,10 @@ spring:
     scheduling:
       pool:
         size: 2
+
 springdoc:
   swagger-ui:
     path: /index.html
+
 app:
   id: 0
