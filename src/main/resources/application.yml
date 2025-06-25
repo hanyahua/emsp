@@ -2,18 +2,32 @@ spring:
   application:
     name: eMSP
 
+# use h2 for a quick start
+#  datasource:
+#    url: jdbc:mysql://127.0.0.1:3306/emsp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
+#    username: root
+#    password: root
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#  jpa:
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.MySQL8Dialect
+#    generate-ddl: true
+  datasource:
+    url: jdbc:h2:mem:emsp;MODE=MySQL;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2.console:
+    enabled: true
+    path: /h2-console
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
+        dialect: org.hibernate.dialect.H2Dialect
     generate-ddl: true
 
-  datasource:
-    url: jdbc:mysql://127.0.0.1:3306/emsp?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&characterEncoding=utf8
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
+#  if you hava a redis
 #  data:
 #    redis:
 #      host: localhost

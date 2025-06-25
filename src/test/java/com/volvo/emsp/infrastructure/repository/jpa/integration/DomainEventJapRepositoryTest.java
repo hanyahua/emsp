@@ -31,7 +31,7 @@ class DomainEventJapRepositoryTest extends BaseDataJpaIntegrationTest {
         // save event
         repository.save(event);
 
-        // 验证查找功能
+        // find
         var foundEvent = repository.findById(event.getEventId());
         assertTrue(foundEvent.isPresent());
         assertEquals(event.getEventId(), foundEvent.get().getEventId());
