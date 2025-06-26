@@ -2,9 +2,8 @@ package com.volvo.emsp.domain.service.impl;
 
 import com.volvo.emsp.domain.service.IdGenerator;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 
-@Service
+@SuppressWarnings("unused")
 public class SnowflakeIdGenerator implements IdGenerator {
 
     // start from (2025-05-01)
@@ -38,7 +37,7 @@ public class SnowflakeIdGenerator implements IdGenerator {
         this.datacenterId = datacenterId;
     }
 
-    public synchronized Long nextId() {
+    public synchronized long nextId() {
         long timestamp = timeGen();
 
         if (timestamp < lastTimestamp) {
