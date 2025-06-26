@@ -12,7 +12,7 @@ public class TestIdGenerator implements IdGenerator {
     private final AtomicLong sequence = new AtomicLong(1);
 
     @Override
-    public Long nextId() {
+    public long nextId() {
         String timeComponent = LocalDateTime.now().format(TIME_FORMATTER);
         String sequenceComponent = String.format("%05d", sequence.getAndIncrement() % 10000);
         return Long.parseLong(timeComponent + sequenceComponent);
