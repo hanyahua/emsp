@@ -90,7 +90,7 @@ public class Card extends AggregateRoot {
             throw new IllegalArgumentException("RFID UID must be less than or equal to 100 characters.");
         }
         if (visibleNumber.length() > 100) {
-            throw new IllegalArgumentException("RFID UID must be less than or equal to 255 characters.");
+            throw new IllegalArgumentException("Visible number must be less than or equal to 100 characters.");
         }
         this.cardId = requireNonNull(cardId, "Card ID must not be null.");
         this.rfidUid = rfidUid;

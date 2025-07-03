@@ -88,7 +88,7 @@ public class Account extends AggregateRoot {
     }
 
     private void changeStatus(AccountStatus target) {
-        if (this.status == target) return; // return
+        if (this.status == target) return;
         if (!this.status.canTransitionTo(target)) {
             throw new InvalidBusinessOperationException(
                     "Invalid transition from " + this.status + " to " + target
